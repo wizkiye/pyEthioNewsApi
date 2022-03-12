@@ -1,0 +1,8 @@
+setuptools~=58.1.0
+telegraph~=2.1.0
+rich~=11.2.0
+httpx~=0.22.0
+requests~=2.27.1
+ujson~=5.1.0
+bs4~=0.0.1
+beautifulsoup4~=4.10.0

@@ -3,7 +3,6 @@ import json
 from dataclasses import dataclass
 
 from bs4 import BeautifulSoup
-from rich.pretty import pprint
 
 from typing import Optional, List
 from pyEthioNews.news import AsyncBaseScraper
@@ -42,11 +41,11 @@ class VOAAmharic(AsyncBaseScraper):
         self.url = "https://amharic.voanews.com/{}"
 
     async def get_world_wide_news(self, page: Optional[int] = 0) -> List[VoaNews]:
-        res = await self.s.get(self.url.format("z/3737"), params={"p": page})
+        res = await self._s.get(self.url.format("z/3737"), params={"p": page})
         return self._fetch_news_form_html(res.text)
 
     def _fetch_news_form_html(self, html: str) -> List[VoaNews]:
-        soup = self.soup(html)
+        soup = self._soup(html)
         div = soup.find_all("div", class_="media-block")
         return [
             VoaNews(
@@ -60,7 +59,7 @@ class VOAAmharic(AsyncBaseScraper):
         ]
 
     def _fetch_details_from_html(self, html: str) -> VoaNewsDetail:
-        soup = self.soup(html)
+        soup = self._soup(html)
         title = soup.find("title").text
         content = soup.find("div", class_="wsw").prettify()
         json_data = json.loads(
@@ -78,15 +77,15 @@ class VOAAmharic(AsyncBaseScraper):
         )
 
     async def fetch_news(self, news: VoaNews) -> VoaNewsDetail:
-        res = await self.s.get(self.url.format(news.link))
+        res = await self._s.get(self.url.format(news.link))
         return self._fetch_details_from_html(res.text)
 
     async def get(self, slug: str) -> VoaNewsDetail:
-        res = await self.s.get(self.url.format(slug))
+        res = await self._s.get(self.url.format(slug))
         return self._fetch_details_from_html(res.text)
 
     async def search(self, query: str, page: int = 1, limit: int = 10) -> List[VoaNews]:
-        res = await self.s.get(
+        res = await self._s.get(
             self.url.format("s"),
             params={"k": query, "tab": "all", "pi": page, "r": "any", "pp": limit},
         )

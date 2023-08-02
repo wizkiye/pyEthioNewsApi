@@ -2,22 +2,21 @@ import json
 from typing import Union, List, Optional
 import httpx
 from bs4 import BeautifulSoup
-from rich.pretty import pprint
 from .types import News
 
 
 class AsyncBaseScraper:
     def __init__(self):
-        self.url = None
-        self.headers = {"User-Agent": "Mozilla/5.0"}
-        self.s = httpx.AsyncClient(follow_redirects=True)
+        self._url = None
+        self._headers = {"User-Agent": "Mozilla/5.0"}
+        self._s = httpx.AsyncClient(follow_redirects=True)
 
     @staticmethod
-    def soup(html: str) -> BeautifulSoup:
+    def _soup(html: str) -> BeautifulSoup:
         return BeautifulSoup(html, "html.parser")
 
     async def _fetch_news(self, url: str) -> Union[List[News], News]:
-        r = await self.s.get(url, headers=self.headers)
+        r = await self._s.get(url, headers=self._headers)
         results_json = json.loads(r.text)
         if isinstance(results_json, dict):
             news = News(results_json)
@@ -30,14 +29,6 @@ class AsyncBaseScraper:
     def get_url(self, news_id: int, limit: Optional[Union[int, str]] = None) -> str:
         if limit:
             return (
-                f"{self.url}wp-json/wp/v2/posts?categories={news_id}&per_page={limit}"
+                f"{self._url}wp-json/wp/v2/posts?categories={news_id}&per_page={limit}"
             )
-        return f"{self.url}wp-json/wp/v2/posts?categories={news_id}"
-
-
-if __name__ == "__main__":
-    import asyncio
-
-    loop = asyncio.get_event_loop()
-    voa = VOAAmharic()
-    pprint(loop.run_until_complete(voa.get_world_wide_news()))
+        return f"{self._url}wp-json/wp/v2/posts?categories={news_id}"

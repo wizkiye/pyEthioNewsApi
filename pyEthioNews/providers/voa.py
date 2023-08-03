@@ -1,10 +1,8 @@
-from datetime import datetime
 import json
 from dataclasses import dataclass
-
-from bs4 import BeautifulSoup
-
+from datetime import datetime
 from typing import Optional, List
+from bs4 import BeautifulSoup
 from pyEthioNews.news import AsyncBaseScraper
 
 
@@ -33,6 +31,15 @@ class VoaNewsDetail:
     @property
     def content(self):
         return BeautifulSoup(self.html, "html.parser").text
+
+    def dict(self):
+        return {
+            "title": self.title,
+            "image": self.image,
+            "date": self.date.isocalendar(),
+            "content": self.content,
+            "modified": self.modified.isocalendar() if self.modified else None,
+        }
 
 
 class VOAAmharic(AsyncBaseScraper):

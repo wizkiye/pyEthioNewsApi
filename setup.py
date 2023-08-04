@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="pyEthioNews",
-    version="1.0.1",
+    version="1.0.2",
     url="https://github.com/wizkiye/pyEthioNewsApi",
     license="MIT",
     author="https://github.com/wizkiye",

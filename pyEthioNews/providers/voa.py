@@ -69,6 +69,9 @@ class VOAAmharic(AsyncBaseScraper):
         soup = self._soup(html)
         title = soup.find("title").text
         content = soup.find("div", class_="wsw").prettify()
+        content= soup.find(
+            "div", class_="media-pholder media-pholder--video "
+        ).prettify()
         json_data = json.loads(
             soup.find("script", {"type": "application/ld+json"}).string
         )

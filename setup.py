@@ -15,7 +15,6 @@ setup(
     install_requires=[
         "httpx",
         "bs4",
-        "lxml",
     ],
     packages=find_packages(),
 )

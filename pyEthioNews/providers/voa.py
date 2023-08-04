@@ -2,7 +2,9 @@ import json
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional, List
+
 from bs4 import BeautifulSoup
+
 from pyEthioNews.news import AsyncBaseScraper
 
 
@@ -69,7 +71,7 @@ class VOAAmharic(AsyncBaseScraper):
         soup = self._soup(html)
         title = soup.find("title").text
         content = soup.find("div", class_="wsw").prettify()
-        content= soup.find(
+        content = soup.find(
             "div", class_="media-pholder media-pholder--video "
         ).prettify()
         json_data = json.loads(

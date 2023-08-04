@@ -1,6 +1,10 @@
-from pathlib import Path
-
 from setuptools import setup, find_packages
+
+
+def read(fname):
+    with open(fname) as f:
+        return f.read()
+
 
 setup(
     name="pyEthioNews",
@@ -10,7 +14,7 @@ setup(
     author="https://github.com/wizkiye",
     author_email="wizkiye@gmail.com",
     description="Ethiopian News Scraper",
-    long_description=Path("README.md").read_text(),
+    long_description=read("README.md"),
     long_description_content_type="text/markdown",
     install_requires=[
         "httpx",

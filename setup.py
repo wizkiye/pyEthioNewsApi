@@ -8,7 +8,7 @@ def read(fname):
 
 setup(
     name="pyEthioNews",
-    version="1.0.2",
+    version="1.0.3",
     url="https://github.com/wizkiye/pyEthioNewsApi",
     license="MIT",
     author="https://github.com/wizkiye",

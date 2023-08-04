@@ -69,11 +69,15 @@ class VOAAmharic(AsyncBaseScraper):
 
     def _fetch_details_from_html(self, html: str) -> VoaNewsDetail:
         soup = self._soup(html)
+        print("fetching details")
         title = soup.find("title").text
-        content = soup.find("div", class_="wsw").prettify()
+        content = soup.find("div", class_="wsw")
+        print(soup.find(
+            "div", class_="media-pholder media-pholder--video"
+        ))
         content = soup.find(
-            "div", class_="media-pholder media-pholder--video "
-        ).prettify()
+            "div", class_="media-pholder media-pholder--video"
+        ).prettify() if not content else content.prettify()
         json_data = json.loads(
             soup.find("script", {"type": "application/ld+json"}).string
         )
